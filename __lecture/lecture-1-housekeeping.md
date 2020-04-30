@@ -31,7 +31,33 @@ render(<>
   <BlueButton>Button 2</BlueButton>
 </>)
 ```
+---
+```js live=true
+const Button = styled.button`
+  padding: 10px;
+  margin: 10px;
+  border-radius: 4px;
+  font-size: 18px;
+  font-weight: bold;
+  background: #EEE;
+`;
 
+const BlueButton = styled(Button)`// styled.button - extention
+  // padding: 10px;
+  // margin: 10px;
+  // border-radius: 4px;
+  // font-size: 18px;
+  // font-weight: bold;
+
+  background: #2B00D7;
+  color: #FFF;
+`
+
+render(<>
+  <Button>Button 1</Button>
+  <BlueButton>Button 2</BlueButton>
+</>)
+```
 ---
 
 ## Exercise
@@ -46,6 +72,9 @@ const ListItem = styled.li`
     border-bottom: none;
   }
 `
+
+// css....
+
 ```
 
 ---

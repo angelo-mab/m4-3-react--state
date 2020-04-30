@@ -12,7 +12,7 @@ State is _dynamic data_. Things that change.
 
 ```jsx live=true
 const Counter = () => {
-  const [count, setCount] = React.useState(0);
+  const [count, setCount] = React.useState(0); //useState is an array. 2 items [name of variable, function]
 
   return (
     <>
@@ -23,6 +23,9 @@ const Counter = () => {
     </>
   )
 }
+
+// when theres a change in state, it will rerender it
+// so if you set count to 10 then click the button, itll rerender the button click to 10 each time
 
 render(<Counter />)
 ```
@@ -243,9 +246,47 @@ const SearchInput = () => {
 
 const SearchResults = () => {
   // ??
+  // best solution
+  const [searchTerm, setSearchTerm] = React.useState('');
+  return (
+    <>
+    
+    </>
+  )
 }
 ```
+```jsx
+const App = () => {
+  const [searchTerm, setSearchTerm] = React.useState('');
+  return (
+    <>
+      <SearchInput  
+      searchTerm={searchTerm}
+      setSearchTerm={setSearchTerm} />
+      <SearchResults />
+    </>
+  )
+}
 
+const SearchInput = () => {
+  
+
+  return (
+    <input
+      type="text"
+      value={searchTerm}
+      onChange={(ev) => {
+        setSearchTerm(ev.target.value);
+      }}
+    />
+  );
+}
+
+const SearchResults = () => {
+  // ??
+  // best solution
+}
+```
 ---
 
 This is called "lifting state up".
@@ -284,11 +325,81 @@ const App = () => {
 render(<App />)
 ```
 
+
+```jsx live=true
+const Counter = ({count , setCount }) => {
+
+  return (
+    <>
+      <button onClick={() => setCount(count + 1)}>
+        Increment
+      </button>
+    </>
+  )
+};
+
+const App = () => {
+  const [count, setCount] = React.useState(0);
+  return (
+    <>
+      The current count is: {count}
+      <Counter 
+      count={count}
+      setCount={setCount}
+      />
+    </>
+  )
+}
+
+render(<App />)
+```
 ---
 
 ```jsx live=true
 const FavouriteFood = () => {
   const [food, setFood] = React.useState('');
+
+  return (
+    <>
+      <label>
+        <input
+          type="radio"
+          name="food"
+          value="pizza"
+          // checked={food === 'pizza'} in HTML checking the box sets the boolean to true. so we dont need this line anymore
+          onChange={() => setFood('pizza')}
+        />
+        Pizza
+      </label>
+      <label>
+        <input
+          type="radio"
+          name="food"
+          value="broccoli"
+          // checked={food === 'broccoli'} in HTML checking the box sets the boolean to true. so we dont need this line anymore
+          onChange={() => setFood('broccoli')}
+        />
+        Broccoli
+      </label>
+    </>
+  )
+};
+
+const App = () => {
+  return (
+    <>
+      My favourite food is: ???
+      <br /><br />
+      <FavouriteFood />
+    </>
+  )
+}
+
+render(<App />)
+```
+
+```jsx live=true
+const FavouriteFood = ({ food, setFood }) => {
 
   return (
     <>
@@ -317,18 +428,22 @@ const FavouriteFood = () => {
 };
 
 const App = () => {
+  
+  const [food, setFood] = React.useState('');
+
   return (
     <>
-      My favourite food is: ???
+      My favourite food is: {food}
       <br /><br />
-      <FavouriteFood />
+      <FavouriteFood 
+        food={food} 
+        setFood={setFood}/>
     </>
   )
 }
 
 render(<App />)
 ```
-
 ---
 
 ### Conditional rendering
